@@ -232,8 +232,8 @@ Contributions are welcome! To maintain quality and consistency, please follow th
 2. **Clone Your Fork**
 
    ```bash
-   git clone https://github.com/<your_username>/modelhub_app.git
-   cd modelhub_app
+   git clone https://github.com/imartinf/modelhub_project
+   cd modelhub_project
    ```
 
 3. **Create a New Branch**
@@ -280,9 +280,9 @@ This project is licensed under the MIT License.
 
 For any questions, suggestions, or support, please contact:
 
-- **Name:** Your Name
-- **Email:** your.email@example.com
-- **GitHub:** @your_username
+- **Name:** Iván Martín-Fernández
+- **Email:** ivan.martinf@upm.es
+- **GitHub:** imartinf
 
 Thank you for using Model Hub! We hope it enhances your workflow and helps manage your machine learning models efficiently.
 
