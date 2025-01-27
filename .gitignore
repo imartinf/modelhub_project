@@ -1,0 +1,5 @@
+/.gradio
+/.pytest_cache
+/.venv
+# Remove .pyc files
+*.pyc
