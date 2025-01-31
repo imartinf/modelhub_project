@@ -12,10 +12,13 @@ class ModelHubLogic:
         # Asegúrate de inicializar la BD si no existe
         self.db.init_db()
 
-    def clone_model(self, git_url):
+    def clone_model(self, git_url, name=None):
         """Clona un repo Git en el directorio compartido y registra en BD."""
         # 1. Extraer nombre del repo
-        name = os.path.splitext(os.path.basename(git_url))[0]
+        if not name:
+            name = os.path.basename(git_url).replace(".git", "")
+        if not name:
+            return "Error: No se pudo determinar un nombre de modelo válido."
 
         # 2. Comprobar si existe ya
         if self.db.model_exists(name=name, url=git_url):
