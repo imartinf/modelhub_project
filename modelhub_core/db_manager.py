@@ -37,6 +37,14 @@ class DBManager:
         conn.commit()
         conn.close()
 
+    def delete_model(self, name):
+        """Elimina un modelo de la BD por nombre."""
+        conn = sqlite3.connect(self.db_path)
+        c = conn.cursor()
+        c.execute("DELETE FROM models WHERE name=?", (name,))
+        conn.commit()
+        conn.close()
+
     def model_exists(self, name=None, url=None):
         """Comprueba si existe un modelo, por nombre o url."""
         conn = sqlite3.connect(self.db_path)
