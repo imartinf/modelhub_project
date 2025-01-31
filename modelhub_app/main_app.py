@@ -13,7 +13,9 @@ def ui_copy_local_model(local_path, model_name):
     return hub.copy_local_model(local_path, model_name)
 
 def ui_list_models():
-    return hub.list_models()
+    changes = hub.refresh_db()
+    models_list = hub.list_models()
+    return changes, models_list
 
 with gr.Blocks() as demo:
     gr.Markdown("# Model Hub")
@@ -44,6 +46,8 @@ with gr.Blocks() as demo:
     with gr.Tab("Listar modelos"):
         list_button = gr.Button("Refrescar lista")
         list_output = gr.Textbox(label="Modelos", lines=10)
-        list_button.click(ui_list_models, outputs=[list_output])
+        refresh_info = gr.Textbox(label="Cambios", lines=3)
+
+        list_button.click(ui_list_models, outputs=[refresh_info, list_output])
 
 demo.launch(share=False, server_name="0.0.0.0", server_port=7860)

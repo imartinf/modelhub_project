@@ -83,6 +83,31 @@ class ModelHubLogic:
             info += f" - {name} [{source}] -> {url}\n   Path: {path} (Creado: {created})\n"
         return info
 
+    def refresh_db(self):
+        """Actualiza la base de datos según el estado actual del directorio compartido."""
+        current_folders = set(os.listdir(self.shared_dir))
+        db_models = self.db.list_models()
+
+        changes = "Cambios en la base de datos:\n"
+        # Eliminar entradas de la BD para carpetas que ya no existen
+        for model in db_models:
+            name, source, url, path, created = model
+            if name not in current_folders:
+                self.db.delete_model(name)
+                changes += f" - Modelo '{name}' eliminado.\n"
+
+        # Agregar nuevas carpetas a la BD
+        for folder in current_folders:
+            if not self.db.model_exists(name=folder):
+                folder_path = os.path.join(self.shared_dir, folder)
+                self.db.insert_model(folder, source="unknown", url="unknown", path=folder_path)
+                changes += f" - Modelo '{folder}' agregado.\n"
+
+        if changes == "Cambios en la base de datos:\n":
+            changes += " - No hubo cambios."
+
+        return changes
+
     def _protect_directory(self, directory):
         """Cambia permisos de un directorio a solo lectura (ficheros -> 444, dirs -> 555)."""
         # Cambiar permisos del propio directorio raíz
